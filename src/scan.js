@@ -1,5 +1,5 @@
 const splittedUrl = require("splitted-url");
-const { default: fetch } = require("node-fetch");
+//const { default: fetch } = require("node-fetch");
 
 const INTERVAL = 20000;
 const MAX_TRIES = 20;

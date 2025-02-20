@@ -1,21 +1,20 @@
-jest.mock("node-fetch");
+global.fetch = jest.fn(() => Promise.resolve([]));
+
+//jest.mock("fetch");
 jest.useFakeTimers();
 
 const scan = require("./scan");
-
-const { default: fetch } = require("node-fetch");
-const { Response } = jest.requireActual("node-fetch");
 
 describe("should scan an URL", () => {
   test("should make full scan", async () => {
     fetch.mockImplementationOnce(() =>
       Promise.resolve(
-        new Response(JSON.stringify({ scan: { status_code: 200 } }))
-      )
-    );
-    fetch.mockImplementationOnce(() =>
-      Promise.resolve(
-        new Response(JSON.stringify({ results: { some: "result" } }))
+        new Response(
+          JSON.stringify({
+            scan: { status_code: 200 },
+            tests: { hello: "world" },
+          })
+        )
       )
     );
     const result = await scan("http://www.free.fr");
@@ -29,7 +28,7 @@ describe("should scan an URL", () => {
     );
 
     expect(result).toEqual({
-      result: { scan: { status_code: 200 } },
+      result: { scan: { status_code: 200 }, tests: { hello: "world" } },
       url: "http://www.free.fr",
     });
   });
