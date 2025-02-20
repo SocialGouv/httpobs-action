@@ -8,9 +8,6 @@ inputs:
     description: "Path to output file. defaults to httpobs.json"
     default: "httpobs.json"
     required: true
-# runs:
-#   using: 'node12'
-#   main: 'dist/index.js'
 
 runs:
   using: "composite"
@@ -29,17 +26,12 @@ runs:
             echo "$url"
         }
 
-        echo "testing URL $INPUT_URL"
-
         HOST=$(remove_url_prefix "$INPUT_URL")
 
         echo "testing HOST $HOST"
-
-
-        ls -la
 
         npm i
 
         ./node_modules/.bin/mdn-http-observatory-scan $HOST > "$INPUT_OUTPUT"
 
-        cat "$INPUT_OUTPUT"
+        cat "$INPUT_OUTPUT" | jq ".scan.grade"
