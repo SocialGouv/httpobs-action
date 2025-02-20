@@ -17,8 +17,8 @@ runs:
   steps:
     - shell: bash
       env:
-        INPUT_URL: ${{ inputs.url}}
-        INPUT_OUTPUT: ${{ inputs.output}}
+        INPUT_URL: ${{ inputs.ur l}}
+        INPUT_OUTPUT: ${{ inputs.output }}
       run: |
         set +e
 
@@ -38,6 +38,6 @@ runs:
 
         npm i
 
-        ./node_modules/.bin/mdn-http-observatory-scan $URL > "${{ INPUT_OUTPUT }}"
+        ./node_modules/.bin/mdn-http-observatory-scan $URL > "$INPUT_OUTPUT"
 
-        cat "${{ INPUT_OUTPUT }}"
+        cat "$INPUT_OUTPUT"
