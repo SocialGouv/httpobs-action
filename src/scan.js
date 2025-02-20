@@ -4,7 +4,7 @@ const { default: fetch } = require("node-fetch");
 const INTERVAL = 20000;
 const MAX_TRIES = 20;
 
-const API_HTTP = `https://http-observatory.security.mozilla.org/api/v1`;
+const API_HTTP = `https://observatory-api.mdn.mozilla.net/api/v2`;
 
 /**
  * Run a HTTP Mozilla scan for a given URL
@@ -25,17 +25,13 @@ const scan = (url, tries = MAX_TRIES) => {
         console.error("e", result.error);
         throw new Error(result.error);
       }
-      if (result.state === "FINISHED") {
-        return fetch(`${API_HTTP}/getScanResults?scan=${result.scan_id}`, {
-          method: "GET",
-        })
-          .then((r) => r.json())
-          .then((details) => ({
-            url,
-            ...result,
-            details,
-          }));
-      } else if (tries > 0) {
+      if (result && result.scan && result.scan.status_code === 200) {
+        return {
+          url,
+          result,
+        };
+      }
+      if (tries > 0) {
         console.warn(
           `delay HTTP ${url} (${MAX_TRIES - tries + 1}/${MAX_TRIES})`
         );
