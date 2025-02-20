@@ -31,7 +31,7 @@ runs:
 
         echo "testing URL $INPUT_URL"
 
-        $HOST=$(remove_url_prefix $INPUT_URL)
+        HOST=$(remove_url_prefix "$INPUT_URL")
 
         echo "testing HOST $HOST"
 
