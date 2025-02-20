@@ -17,7 +17,7 @@ runs:
   steps:
     - shell: bash
       env:
-        INPUT_URL: ${{ inputs.ur l}}
+        INPUT_URL: ${{ inputs.url }}
         INPUT_OUTPUT: ${{ inputs.output }}
       run: |
         set +e
