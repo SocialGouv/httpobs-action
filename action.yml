@@ -1,13 +1,43 @@
-name: 'Run Mozilla HTTP Observatory scan'
-description: 'Run a scan on https://observatory.mozilla.org API'
+name: "Run Mozilla HTTP Observatory scan"
+description: "Run a scan on https://observatory.mozilla.org API"
 inputs:
-  url: 
-    description: 'URL ro scan'
+  url:
+    description: "URL ro scan"
     required: true
   output:
-    description: 'Path to output file. defaults to httpobs.json'
-    default: 'httpobs.json'
+    description: "Path to output file. defaults to httpobs.json"
+    default: "httpobs.json"
     required: true
+# runs:
+#   using: 'node12'
+#   main: 'dist/index.js'
+
 runs:
-  using: 'node12'
-  main: 'dist/index.js'
+  using: "composite"
+  steps:
+    - shell: bash
+      env:
+        INPUT_URL: ${{ inputs.url}}
+        INPUT_OUTPUT: ${{ inputs.output}}
+      run: |
+        set +e
+
+        remove_url_prefix() {
+            local url="$1"
+            url="${url#http://}"
+            url="${url#https://}"
+            echo "$url"
+        }
+
+
+        echo "testing URL $INPUT_URL"
+
+        $URL=$(remove_url_prefix $INPUT_URL)
+
+        ls -la
+
+        npm i
+
+        ./node_modules/.bin/mdn-http-observatory-scan $URL > "${{ INPUT_OUTPUT }}"
+
+        cat "${{ INPUT_OUTPUT }}"
