@@ -25750,10 +25750,7 @@ const scan = (url, tries = MAX_TRIES) => {
         throw new Error(result.error);
       }
       if (result && result.scan && result.scan.status_code === 200) {
-        return {
-          url,
-          result,
-        };
+        return result;
       }
       if (tries > 0) {
         console.warn(

@@ -28,8 +28,8 @@ describe("should scan an URL", () => {
     );
 
     expect(result).toEqual({
-      result: { scan: { status_code: 200 }, tests: { hello: "world" } },
-      url: "http://www.free.fr",
+      scan: { status_code: 200 },
+      tests: { hello: "world" },
     });
   });
 });
