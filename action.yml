@@ -32,6 +32,8 @@ runs:
 
         npm i
 
+        export RETRIEVER_USER_AGENT="Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:129.0) Gecko/20100101 Firefox/129.0 Observatory/129.0 dashlord",
+
         ./node_modules/.bin/mdn-http-observatory-scan $HOST > "$INPUT_OUTPUT"
 
         cat "$INPUT_OUTPUT" | jq ".scan.grade"
