@@ -19,4 +19,4 @@ jobs:
           url: https://www.free.fr
           output: something.json
       - run: |
-          cat something.json
+          cat something.json | jq ".scan.grade"
