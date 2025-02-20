@@ -29,15 +29,17 @@ runs:
             echo "$url"
         }
 
-
         echo "testing URL $INPUT_URL"
 
-        $URL=$(remove_url_prefix $INPUT_URL)
+        $HOST=$(remove_url_prefix $INPUT_URL)
+
+        echo "testing HOST $HOST"
+
 
         ls -la
 
         npm i
 
-        ./node_modules/.bin/mdn-http-observatory-scan $URL > "$INPUT_OUTPUT"
+        ./node_modules/.bin/mdn-http-observatory-scan $HOST > "$INPUT_OUTPUT"
 
         cat "$INPUT_OUTPUT"
